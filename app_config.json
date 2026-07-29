@@ -1,0 +1,14 @@
+{
+  "initial_startup_dir": "",
+  "encoding_profile": {
+    "hw": "CPU 전용 (호환성 최상)",
+    "codec": "AV1 (차세대 초고압축, 추천)",
+    "format": "MKV (.mkv)",
+    "res": "원본 유지",
+    "fps": "원본 유지",
+    "audio": "128k (표준 - 기본값)",
+    "crf": 35,
+    "merge_mode": false,
+    "merge_fit": "자동 맞춤 (Contain/Fit - 비율유지+여백)"
+  }
+}

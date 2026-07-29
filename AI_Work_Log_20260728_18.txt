@@ -1,0 +1,16 @@
+[2026-07-28 19:30] 스마트 동영상 압축기 v4.67f (Folder Subfolder Option & Video Stream Validator) 구현 및 정리 완료
+
+1. 폴더 추가 하위 탐색 범위 선택 대화상자 추가:
+   - `add_folder()` 실행 시 대화상자를 출력하여 "선택한 폴더만 탐색 (하위 제외)" vs "하위 폴더 포함 전체 탐색"을 사용자가 직관적으로 선택할 수 있도록 구현.
+
+2. 네트워크 드라이브 및 원본 저장 경로 정규화:
+   - 네트워크 드라이브(\\server\share, Z:\)나 루트 드라이브(D:\) 스캔 시 `src_root` 명칭 유실로 인한 상위 폴더 이탈 저장 문제 수정.
+   - `output_mode == 'source'`일 때 개별 파일의 실제 절대 경로 부모 디렉터리(`Path(file).resolve().parent`)로 100% 결과물이 저장되도록 완전 보장.
+
+3. 영상 스트림 결손 감지 및 자동 검증 엔진 (`validate_encoded_video_stream`):
+   - 변환 직후 `ffprobe`로 생성물 내 비디오 스트림(width, height, v_stream) 유무 필수 검증.
+   - 원본에 영상이 있었으나 출력물에 영상 트랙이 누락되어 음성만 존재하는 결함 MKV/MP4 발생 시 즉시 결함 파일 삭제, 오류 상태 기록 및 리포트 출력.
+
+4. 버전 및 빌드 관리:
+   - smart_video_compressor_v4.67f.pyw, smart_video_compressor_v4.67f.py 소스 동기화.
+   - dist/smart_video_compressor_v4.67f.exe 빌드 완료 후 루트 폴더 상주 배치. 구버전 v4.67e 파일 old/ 및 old/dist/ 이관.

@@ -1,0 +1,13 @@
+==================================================
+[작업 기록] 2026-07-28 16:00:00 - 16:45:00
+==================================================
+* 대상 파일: smart_video_compressor_v4.65t.pyw (수정 후 v4.66), SmartVideoCompressor_Specification.txt
+* AI 모델: Gemini 3.6 Flash (Medium)
+* 작업 목적: GPU 하이브리드 파이프라인(HW 디코딩/필터링 + CPU AV1/HEVC/H.264 인코딩) 구축 및 HW 가속 오동작 발생 시 지능형 자동 CPU 롤백(Fallback) 예외 처리 로직 구현.
+* 작업 절차 및 알고리즘 수정 상세:
+  1. (v4.66) GPU 하이브리드 파이프라인 구축: RX 6600, GTX 계열 등 AV1 HW 인코더가 없는 그래픽 카드 환경에서도 GPU 전용 비디오 디코딩/스케일링 칩(-hwaccel d3d11va / cuda / qsv 및 scale_d3d11 / scale_cuda / scale_qsv, hwdownload,format=nv12)을 활용해 VRAM에서 전처리를 마친 후 CPU(libsvtav1 / libx265 / libx264)로 프레임을 전달하여 인코딩 연산 부담을 최소화하는 파이프라인 연동.
+  2. (v4.66) 5지점 정밀 분석 및 미리보기 연동: _make_5point_quality_reference 및 미리보기 렌더링 명령어에도 하이브리드 가속 파이프라인 적용.
+  3. (v4.66) 지능형 자동 CPU 롤백 (Automatic CPU Fallback): 배치 인코딩, 미리보기, 정밀 분석 실행 중 GPU 드라이버 호환성/VRAM 부족/미지원 포맷으로 HW 가속 명령 실패 시, 이를 즉시 감지해 사용자에게 상태(⚠️ 가속 오류로 CPU 모드로 자동 전환 중)를 알리고 pure CPU 명령어로 자동 재조합하여 차질 없이 재시도/완수하는 이중 안전망 구현.
+  4. (v4.66) PyInstaller 빌드 실행: 최신 v4.66 로직이 포함된 단일 독립 실행 파일 dist/smart_video_compressor_v4.66.exe 패키징.
+* Specification 갱신: SmartVideoCompressor_Specification.txt 버전을 v4.66으로 올리고 하이브리드 GPU 파이프라인 및 자동 CPU 롤백 명세 추가.
+

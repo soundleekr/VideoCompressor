@@ -1,0 +1,30 @@
+================================================================================
+스마트 동영상 압축기 (Smart Video Compressor) - 작업 로그 (v4.67g)
+================================================================================
+작업 일자: 2026-07-28 19:38:00
+작업 버전: v4.67g (Build 20260728 - Original File Protection & Auto Numbering Engine)
+
+[1. 주요 개발 및 수정 내용 (Key Developments & Bug Fixes)]
+--------------------------------------------------------------------------------
+1. 원본 파일 안전 보호 및 파일명 중복 충돌 방지 로직 구축 (v4.67g)
+   - 문제: '원본 폴더에 저장' 모드와 '기존 파일명 유지하기(파일명만)' 옵션을 동시에 선택하고 원본 파일과 동일한 확장자(예: .mp4 -> .mp4)로 변환 시, 인코딩 결과물이 원본 파일과 동일한 파일 경로를 가지게 되어 원본이 파손되거나 FFmpeg 권한 에러/덮어쓰기 오류가 발생할 가능성이 존재함.
+   - 해결:
+     (1) 인코딩 출력 경로 결정 시 (`out_path == original_input_path`) 여부를 정밀 판별하는 자동 안전 로직 구축.
+     (2) 경로 충돌 시 원본 파일 경로를 보존하고 출력 파일명에 ` (1)`, ` (2)`... 형태의 순번(Suffix)을 자동으로 부착하여 신규 파일로 안전하게 저장되도록 조치.
+     (3) 원본 삭제 옵션(`delete_orig_file`)이 체크되어 있는 경우에만 임시 출력 경로로 저장 후 변환 완료 검증을 거쳐 안전하게 원본을 대체/삭제하도록 안전 장치 마련.
+
+2. 소스 파일 및 아티팩트 정리 및 빌드 (v4.67g)
+   - `smart_video_compressor_v4.67g.pyw` / `smart_video_compressor_v4.67g.py` 생성.
+   - 이전 구버전 실행 파일(`v4.67f.exe`)을 `old/dist/` 폴더로 이전 정리.
+   - PyInstaller 6.21.0을 사용하여 `smart_video_compressor_v4.67g.exe` 단일 실행 파일 컴파일 완료 후 루트 디렉터리에 배치.
+
+--------------------------------------------------------------------------------
+[2. 수정 및 생성된 파일 목록]
+--------------------------------------------------------------------------------
+- E:\((Antigravity))\SmartVideoCompressor\smart_video_compressor_v4.67g.pyw
+- E:\((Antigravity))\SmartVideoCompressor\smart_video_compressor_v4.67g.py
+- E:\((Antigravity))\SmartVideoCompressor\smart_video_compressor_v4.67g.exe
+- E:\((Antigravity))\SmartVideoCompressor\old\dist\smart_video_compressor_v4.67f.exe
+- E:\((Antigravity))\SmartVideoCompressor\SmartVideoCompressor_Specification.txt
+- E:\((Antigravity))\SmartVideoCompressor\AI_Work_Log_20260728_19.txt
+================================================================================

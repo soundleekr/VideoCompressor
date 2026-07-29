@@ -1,0 +1,32 @@
+# Build and distribution folders
+build/
+build_temp/
+dist/
+old/
+
+# Codec binaries
+codec/*.exe
+
+# Executables and libraries
+*.exe
+*.dll
+
+# Logs and caches
+*.log
+*.pyc
+__pycache__/
+
+# Media samples
+*.3gp
+*.mp4
+*.mkv
+
+# Python distribution
+*.egg-info/
+
+dist/
+
+# Misc
+.vscode/
+env/
+venv/
